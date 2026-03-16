@@ -1,12 +1,18 @@
 from fastapi import FastAPI, Query
 from fastapi.responses import FileResponse
-import os
+import os, threading, subprocess, sys
 from fastapi.middleware.cors import CORSMiddleware
 import sqlite3, requests
 from bs4 import BeautifulSoup
 from typing import Optional
 
 app = FastAPI(title="Funpay Mirror API")
+
+def run_parser():
+    subprocess.run([sys.executable, "parser.py"])
+
+threading.Thread(target=run_parser, daemon=True).start()
+
 
 app.add_middleware(
     CORSMiddleware,
