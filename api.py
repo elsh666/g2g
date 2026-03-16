@@ -1,4 +1,6 @@
 from fastapi import FastAPI, Query
+from fastapi.responses import FileResponse
+import os
 from fastapi.middleware.cors import CORSMiddleware
 import sqlite3, requests
 from bs4 import BeautifulSoup
@@ -175,3 +177,7 @@ def get_lot_detail(lot_id: str):
         "unit": unit,
         "images": images,
     }
+
+@app.get("/")
+def serve_index():
+    return FileResponse("index.html")
